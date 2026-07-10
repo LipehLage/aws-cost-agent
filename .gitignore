@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Segredos e saídas locais
+.env
+report.md
+build/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate*
+terraform/*.tfvars
