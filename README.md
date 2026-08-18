@@ -112,17 +112,18 @@ tópico do relatório e logs no CloudWatch.
 
 ---
 
-## O que este projeto exercitou
+## Uma decisão que vale comentário
 
-- Consumo da API do Cost Explorer com boto3, incluindo paginação
-- Detecção de anomalias simples e explicável (crescimento semana contra
-  semana com piso de materialidade) — sem caixa preta
-- Prompt engineering para relatório executivo: o LLM recebe dados já
-  estruturados e é instruído a não inventar números
-- Degradação graciosa: sem chave de API o pipeline segue útil
-- Infraestrutura como código com Terraform: Lambda, EventBridge, SNS e IAM
-  com permissões mínimas
-- CI no GitHub Actions com testes e smoke test do fluxo completo
+A detecção de anomalias é intencionalmente simples: crescimento ≥ 25% na
+última semana versus a anterior, com um piso de $10 para ignorar serviços
+irrelevantes. Não há ML, não há séries temporais, não há hiper-parâmetros.
+
+Numa versão anterior usei z-score — parecia mais sofisticado. O problema: com
+30 dias de dados, a janela histórica é curta demais para o desvio padrão ser
+estável, e qualquer pico passado distorcia o baseline. A comparação simples de
+semanas é menos sensível a ruído, mais fácil de explicar num relatório
+executivo ("o EC2 cresceu 47% esta semana") e suficiente para o que o agente
+precisa fazer.
 
 ---
 
